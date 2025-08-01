@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Portfolio</title>
+    <title>My Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -12,351 +12,303 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 50%, #5DADE2 100%);
             min-height: 100vh;
             color: #333;
         }
 
-        .container {
-            max-width: 900px;
+        /* Navigation Bar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 0;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4A90E2;
+            text-decoration: none;
         }
 
-        .profile-section {
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4A90E2;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4A90E2;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 40px 20px;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px;
             margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-section h1 {
+            color: #4A90E2;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .content-section h2 {
+            color: #4A90E2;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .content-section p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Home Section */
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
         }
 
         .profile-image {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            background: linear-gradient(45deg, #87CEEB, #4A90E2);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
+            margin: 0 auto 30px;
             font-size: 4rem;
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
         }
 
-        .header h1 {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        .hero-text {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            font-weight: 300;
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
         }
 
-        /* Tab Navigation */
-        .tab-nav {
-            display: flex;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 15px;
-            padding: 10px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        .hero-text p {
+            font-size: 1.3rem;
+            color: #666;
         }
 
-        .tab-button {
-            background: transparent;
-            border: none;
-            padding: 15px 30px;
-            margin: 0 5px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab-button:hover {
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .tab-button.active {
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-            color: white;
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
-        }
-
-        .tab-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .tab-button:hover::before {
-            left: 100%;
-        }
-
-        /* Tab Content */
-        .tab-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            min-height: 400px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .tab-content.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .tab-content h2 {
-            color: #333;
-            font-size: 2rem;
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-        }
-
-        .tab-content h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-            border-radius: 2px;
-        }
-
-        /* About Me Content */
-        .about-content {
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        .about-content p {
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-
-        .skills {
+        /* About Section */
+        .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 30px;
         }
 
-        .skill-item {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px;
+        .about-card {
+            background: #f8f9fa;
+            padding: 25px;
             border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            transition: transform 0.3s ease;
+            border-left: 4px solid #4A90E2;
         }
 
-        .skill-item:hover {
-            transform: translateY(-5px);
+        .about-card h3 {
+            color: #4A90E2;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
         }
 
-        /* Hobbies Content */
-        .hobbies-grid {
+        /* News Section */
+        .news-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #87CEEB;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-item h3 {
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
 
-        .hobby-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
+        .gallery-item {
+            background: #f8f9fa;
             border-radius: 15px;
+            padding: 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            border: 2px solid transparent;
         }
 
-        .hobby-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: #87CEEB;
+            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.2);
         }
 
-        .hobby-card:hover::before {
-            opacity: 1;
-            transform: rotate(45deg) translate(50%, 50%);
-        }
-
-        .hobby-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .hobby-icon {
+        .gallery-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #87CEEB, #4A90E2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 3rem;
+            color: white;
             margin-bottom: 15px;
-            display: block;
         }
 
-        .hobby-card h3 {
-            font-size: 1.3rem;
+        .gallery-item h3 {
+            color: #4A90E2;
             margin-bottom: 10px;
         }
 
-        .hobby-card p {
+        .gallery-item p {
+            color: #666;
             font-size: 0.95rem;
-            opacity: 0.9;
         }
 
-        /* Instruments Content */
-        .instruments-container {
-            text-align: center;
-        }
-
-        .instruments-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .instrument-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-            position: relative;
-        }
-
-        .instrument-card:hover {
-            transform: translateY(-10px);
-            border-color: #ff6b6b;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .instrument-emoji {
-            font-size: 4rem;
-            margin-bottom: 15px;
-            display: block;
-            animation: bounce 2s infinite;
-        }
-
-        .instrument-card h3 {
-            color: #333;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-
-        .experience-level {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .beginner {
-            background: #ffeaa7;
-            color: #d63031;
-        }
-
-        .intermediate {
-            background: #81ecec;
-            color: #00b894;
-        }
-
-        .advanced {
-            background: #fd79a8;
-            color: #e84393;
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #4A90E2;
+            cursor: pointer;
         }
 
         /* Animations */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
+            to {
+                opacity: 1;
                 transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
             }
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+            .mobile-menu-btn {
+                display: block;
             }
 
-            .tab-nav {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
                 flex-direction: column;
-                gap: 10px;
+                padding: 20px;
+                gap: 20px;
+                display: none;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             }
 
-            .tab-button {
-                margin: 0;
-                padding: 12px 20px;
+            .nav-links.active {
+                display: flex;
             }
 
-            .tab-content {
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .content-section {
                 padding: 25px;
             }
 
-            .header h1 {
-                font-size: 2rem;
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
             }
 
             .profile-image {
@@ -365,199 +317,199 @@
                 font-size: 3rem;
             }
 
-            .hobbies-grid,
-            .instruments-grid {
+            .gallery-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="profile-section">
-                <div class="profile-image">👨‍💻</div>
-                <h1>Your Name</h1>
-                <p>Welcome to my personal space</p>
-            </div>
-        </header>
-
-        <nav class="tab-nav">
-            <button class="tab-button active" onclick="openTab(event, 'about')">
-                📖 About Me
-            </button>
-            <button class="tab-button" onclick="openTab(event, 'hobbies')">
-                🎯 Hobbies
-            </button>
-            <button class="tab-button" onclick="openTab(event, 'instruments')">
-                🎵 Instruments
-            </button>
-        </nav>
-
-        <div id="about" class="tab-content active">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <p>Hello! I'm a passionate individual who loves exploring new ideas and creating meaningful connections. My journey has been filled with diverse experiences that have shaped who I am today.</p>
-                
-                <p>I believe in continuous learning and growth, always seeking opportunities to expand my horizons and contribute positively to the world around me. Whether it's through personal projects, collaborative work, or simply engaging in thoughtful conversations, I strive to make each day count.</p>
-                
-                <p>My approach to life is guided by curiosity, creativity, and compassion. I enjoy tackling challenges head-on and finding innovative solutions to complex problems.</p>
-                
-                <div class="skills">
-                    <div class="skill-item">Creative Thinking</div>
-                    <div class="skill-item">Problem Solving</div>
-                    <div class="skill-item">Communication</div>
-                    <div class="skill-item">Leadership</div>
-                    <div class="skill-item">Adaptability</div>
-                    <div class="skill-item">Teamwork</div>
-                </div>
-            </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">My Portfolio</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('about')">About</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('news')">In the News</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('gallery')">Gallery</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <div id="hobbies" class="tab-content">
-            <h2>My Hobbies</h2>
-            <div class="hobbies-grid">
-                <div class="hobby-card" onclick="animateCard(this)">
-                    <span class="hobby-icon">📚</span>
-                    <h3>Reading</h3>
-                    <p>Exploring different worlds through books, from fiction to non-fiction, always expanding my knowledge and imagination.</p>
-                </div>
-                
-                <div class="hobby-card" onclick="animateCard(this)">
-                    <span class="hobby-icon">🎨</span>
-                    <h3>Digital Art</h3>
-                    <p>Creating digital artwork and exploring various design techniques to express creativity and bring ideas to life.</p>
-                </div>
-                
-                <div class="hobby-card" onclick="animateCard(this)">
-                    <span class="hobby-icon">🏃‍♂️</span>
-                    <h3>Running</h3>
-                    <p>Staying active and healthy while exploring new routes and challenging myself to reach new personal goals.</p>
-                </div>
-                
-                <div class="hobby-card" onclick="animateCard(this)">
-                    <span class="hobby-icon">🌱</span>
-                    <h3>Gardening</h3>
-                    <p>Growing plants and creating beautiful outdoor spaces while connecting with nature and practicing mindfulness.</p>
-                </div>
-                
-                <div class="hobby-card" onclick="animateCard(this)">
-                    <span class="hobby-icon">📸</span>
-                    <h3>Photography</h3>
-                    <p>Capturing moments and beauty in everyday life, experimenting with different techniques and perspectives.</p>
-                </div>
-                
-                <div class="hobby-card" onclick="animateCard(this)">
-                    <span class="hobby-icon">🍳</span>
-                    <h3>Cooking</h3>
-                    <p>Experimenting with new recipes and cuisines, sharing delicious meals with friends and family.</p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="hero-section">
+                <div class="profile-image">👋</div>
+                <div class="hero-text">
+                    <h1>Welcome</h1>
+                    <p>Hello! I'm glad you're here. Explore my portfolio to learn more about me, my work, and my journey.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="instruments" class="tab-content">
-            <h2>Musical Instruments</h2>
-            <div class="instruments-container">
-                <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666;">Music has always been a significant part of my life. Here are the instruments I play:</p>
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <h1>About Me</h1>
+            <p>I'm a passionate individual dedicated to creating meaningful experiences and making a positive impact. My journey has been shaped by curiosity, creativity, and a desire to continuously learn and grow.</p>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Background</h3>
+                    <p>With a diverse background spanning multiple disciplines, I bring a unique perspective to every project. My experience has taught me the value of collaboration, innovation, and perseverance.</p>
+                </div>
                 
-                <div class="instruments-grid">
-                    <div class="instrument-card">
-                        <span class="instrument-emoji">🎸</span>
-                        <h3>Guitar</h3>
-                        <p>My primary instrument for over 8 years</p>
-                        <span class="experience-level advanced">Advanced</span>
-                    </div>
-                    
-                    <div class="instrument-card">
-                        <span class="instrument-emoji">🎹</span>
-                        <h3>Piano</h3>
-                        <p>Classical training and modern compositions</p>
-                        <span class="experience-level intermediate">Intermediate</span>
-                    </div>
-                    
-                    <div class="instrument-card">
-                        <span class="instrument-emoji">🥁</span>
-                        <h3>Drums</h3>
-                        <p>Rhythm and percussion enthusiast</p>
-                        <span class="experience-level intermediate">Intermediate</span>
-                    </div>
-                    
-                    <div class="instrument-card">
-                        <span class="instrument-emoji">🎻</span>
-                        <h3>Violin</h3>
-                        <p>Recently started learning this beautiful instrument</p>
-                        <span class="experience-level beginner">Beginner</span>
-                    </div>
-                    
-                    <div class="instrument-card">
-                        <span class="instrument-emoji">🎺</span>
-                        <h3>Trumpet</h3>
-                        <p>Played in school band for 4 years</p>
-                        <span class="experience-level intermediate">Intermediate</span>
-                    </div>
-                    
-                    <div class="instrument-card">
-                        <span class="instrument-emoji">🪕</span>
-                        <h3>Banjo</h3>
-                        <p>Exploring folk and bluegrass music</p>
-                        <span class="experience-level beginner">Beginner</span>
-                    </div>
+                <div class="about-card">
+                    <h3>Skills & Expertise</h3>
+                    <p>I specialize in creative problem-solving, strategic thinking, and effective communication. My technical skills are complemented by strong interpersonal abilities and leadership experience.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Philosophy</h3>
+                    <p>I believe in the power of simplicity, authenticity, and purposeful design. Every project is an opportunity to create something meaningful that resonates with people and makes a difference.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Goals</h3>
+                    <p>My goal is to continue pushing boundaries, exploring new possibilities, and contributing to projects that have a positive impact on communities and individuals alike.</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="content-section">
+            <h1>In the News</h1>
+            <p>Stay updated with my latest achievements, projects, and featured appearances.</p>
+            
+            <div class="news-item">
+                <div class="news-date">March 15, 2025</div>
+                <h3>Featured in Tech Innovation Magazine</h3>
+                <p>Recently featured as one of the rising innovators to watch in 2025. The article highlights my approach to creative problem-solving and community impact initiatives.</p>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-date">February 28, 2025</div>
+                <h3>Speaking at Design Conference</h3>
+                <p>Excited to be speaking at the Annual Design & Innovation Conference about the future of user experience and the importance of human-centered design.</p>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-date">January 20, 2025</div>
+                <h3>Project Launch Success</h3>
+                <p>Successfully launched a new community initiative that has already impacted over 500 individuals. The project focuses on digital literacy and creative skill development.</p>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-date">December 10, 2024</div>
+                <h3>Award Recognition</h3>
+                <p>Honored to receive the Community Impact Award for outstanding contributions to local educational programs and mentorship initiatives.</p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="content-section">
+            <h1>Gallery</h1>
+            <p>A visual showcase of my work, projects, and memorable moments.</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🎨</div>
+                    <h3>Creative Projects</h3>
+                    <p>A collection of my latest creative works and artistic endeavors.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">💼</div>
+                    <h3>Professional Work</h3>
+                    <p>Highlights from my professional portfolio and client projects.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🏆</div>
+                    <h3>Achievements</h3>
+                    <p>Awards, recognitions, and milestone moments throughout my career.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🌟</div>
+                    <h3>Community Impact</h3>
+                    <p>Projects and initiatives focused on making a positive difference.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">📚</div>
+                    <h3>Learning Journey</h3>
+                    <p>Documentation of my continuous learning and skill development.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🤝</div>
+                    <h3>Collaborations</h3>
+                    <p>Memorable collaborations and team projects with amazing people.</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script>
-        function openTab(evt, tabName) {
-            // Hide all tab contents
-            const tabContents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
-            }
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
 
-            // Remove active class from all tab buttons
-            const tabButtons = document.getElementsByClassName("tab-button");
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
 
-            // Show the selected tab and mark button as active
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+
+            // Close mobile menu if open
+            const navLinksContainer = document.getElementById('navLinks');
+            navLinksContainer.classList.remove('active');
         }
 
-        function animateCard(card) {
-            card.style.transform = 'translateY(-15px) scale(0.98)';
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function animateGalleryItem(item) {
+            const placeholder = item.querySelector('.gallery-placeholder');
+            placeholder.style.transform = 'scale(0.95)';
             setTimeout(() => {
-                card.style.transform = 'translateY(-10px) scale(1.02)';
+                placeholder.style.transform = 'scale(1)';
             }, 150);
         }
 
-        // Add some interactive elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate skill items on hover
-            const skillItems = document.querySelectorAll('.skill-item');
-            skillItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px) rotate(2deg)';
-                });
-                
-                item.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) rotate(0deg)';
-                });
-            });
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navbar = document.querySelector('.navbar');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!navbar.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
 
-            // Add click effects to instrument cards
-            const instrumentCards = document.querySelectorAll('.instrument-card');
-            instrumentCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const emoji = this.querySelector('.instrument-emoji');
-                    emoji.style.transform = 'scale(1.2) rotate(360deg)';
-                    setTimeout(() => {
-                        emoji.style.transform = 'scale(1) rotate(0deg)';
-                    }, 500);
-                });
-            });
+        // Smooth scrolling effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
         });
     </script>
 </body>
