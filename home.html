@@ -1,1 +1,517 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 50%, #5DADE2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4A90E2;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4A90E2;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4A90E2;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 40px 20px;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-section h1 {
+            color: #4A90E2;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .content-section h2 {
+            color: #4A90E2;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .content-section p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Home Section */
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #87CEEB, #4A90E2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
+        }
+
+        .hero-text {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .about-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .about-card h3 {
+            color: #4A90E2;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* News Section */
+        .news-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #87CEEB;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-item h3 {
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: #87CEEB;
+            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.2);
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #87CEEB, #4A90E2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .gallery-item h3 {
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+
+        .gallery-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #4A90E2;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                display: none;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+
+            .profile-image {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">My Portfolio</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('about')">About</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('news')">In the News</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('gallery')">Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="hero-section">
+                <div class="profile-image">👋</div>
+                <div class="hero-text">
+                    <h1>Welcome</h1>
+                    <p>Hello! I'm glad you're here. Explore my portfolio to learn more about me, my work, and my journey.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <h1>About Me</h1>
+            <p>I'm a passionate individual dedicated to creating meaningful experiences and making a positive impact. My journey has been shaped by curiosity, creativity, and a desire to continuously learn and grow.</p>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Background</h3>
+                    <p>With a diverse background spanning multiple disciplines, I bring a unique perspective to every project. My experience has taught me the value of collaboration, innovation, and perseverance.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Skills & Expertise</h3>
+                    <p>I specialize in creative problem-solving, strategic thinking, and effective communication. My technical skills are complemented by strong interpersonal abilities and leadership experience.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Philosophy</h3>
+                    <p>I believe in the power of simplicity, authenticity, and purposeful design. Every project is an opportunity to create something meaningful that resonates with people and makes a difference.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Goals</h3>
+                    <p>My goal is to continue pushing boundaries, exploring new possibilities, and contributing to projects that have a positive impact on communities and individuals alike.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="content-section">
+            <h1>In the News</h1>
+            <p>Stay updated with my latest achievements, projects, and featured appearances.</p>
+            
+            <div class="news-item">
+                <div class="news-date">March 15, 2025</div>
+                <h3>Featured in Tech Innovation Magazine</h3>
+                <p>Recently featured as one of the rising innovators to watch in 2025. The article highlights my approach to creative problem-solving and community impact initiatives.</p>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-date">February 28, 2025</div>
+                <h3>Speaking at Design Conference</h3>
+                <p>Excited to be speaking at the Annual Design & Innovation Conference about the future of user experience and the importance of human-centered design.</p>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-date">January 20, 2025</div>
+                <h3>Project Launch Success</h3>
+                <p>Successfully launched a new community initiative that has already impacted over 500 individuals. The project focuses on digital literacy and creative skill development.</p>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-date">December 10, 2024</div>
+                <h3>Award Recognition</h3>
+                <p>Honored to receive the Community Impact Award for outstanding contributions to local educational programs and mentorship initiatives.</p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="content-section">
+            <h1>Gallery</h1>
+            <p>A visual showcase of my work, projects, and memorable moments.</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🎨</div>
+                    <h3>Creative Projects</h3>
+                    <p>A collection of my latest creative works and artistic endeavors.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">💼</div>
+                    <h3>Professional Work</h3>
+                    <p>Highlights from my professional portfolio and client projects.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🏆</div>
+                    <h3>Achievements</h3>
+                    <p>Awards, recognitions, and milestone moments throughout my career.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🌟</div>
+                    <h3>Community Impact</h3>
+                    <p>Projects and initiatives focused on making a positive difference.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">📚</div>
+                    <h3>Learning Journey</h3>
+                    <p>Documentation of my continuous learning and skill development.</p>
+                </div>
+                
+                <div class="gallery-item" onclick="animateGalleryItem(this)">
+                    <div class="gallery-placeholder">🤝</div>
+                    <h3>Collaborations</h3>
+                    <p>Memorable collaborations and team projects with amazing people.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+
+            // Close mobile menu if open
+            const navLinksContainer = document.getElementById('navLinks');
+            navLinksContainer.classList.remove('active');
+        }
+
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function animateGalleryItem(item) {
+            const placeholder = item.querySelector('.gallery-placeholder');
+            placeholder.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                placeholder.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navbar = document.querySelector('.navbar');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!navbar.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
