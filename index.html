@@ -1,10 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  <meta charset="UTF-8">
-    
-  </head>
-  <body>
-    <p> WORDS </p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .profile-section {
+            margin-bottom: 30px;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 15px 30px;
+            margin: 0 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab-button:hover::before {
+            left: 100%;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            min-height: 400px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .tab-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tab-content h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .tab-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border-radius: 2px;
+        }
+
+        /* About Me Content */
+        .about-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill-item {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Hobbies Content */
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .hobby-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        .hobby-card:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .hobby-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .hobby-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Instruments Content */
+        .instruments-container {
+            text-align: center;
+        }
+
+        .instruments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .instrument-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+        }
+
+        .instrument-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff6b6b;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .instrument-emoji {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        .instrument-card h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .experience-level {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .beginner {
+            background: #ffeaa7;
+            color: #d63031;
+        }
+
+        .intermediate {
+            background: #81ecec;
+            color: #00b894;
+        }
+
+        .advanced {
+            background: #fd79a8;
+            color: #e84393;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .tab-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .tab-button {
+                margin: 0;
+                padding: 12px 20px;
+            }
+
+            .tab-content {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-image {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .hobbies-grid,
+            .instruments-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <div class="profile-image">👨‍💻</div>
+                <h1>Your Name</h1>
+                <p>Welcome to my personal space</p>
+            </div>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-button active" onclick="openTab(event, 'about')">
+                📖 About Me
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'hobbies')">
+                🎯 Hobbies
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'instruments')">
+                🎵 Instruments
+            </button>
+        </nav>
+
+        <div id="about" class="tab-content active">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>Hello! I'm a passionate individual who loves exploring new ideas and creating meaningful connections. My journey has been filled with diverse experiences that have shaped who I am today.</p>
+                
+                <p>I believe in continuous learning and growth, always seeking opportunities to expand my horizons and contribute positively to the world around me. Whether it's through personal projects, collaborative work, or simply engaging in thoughtful conversations, I strive to make each day count.</p>
+                
+                <p>My approach to life is guided by curiosity, creativity, and compassion. I enjoy tackling challenges head-on and finding innovative solutions to complex problems.</p>
+                
+                <div class="skills">
+                    <div class="skill-item">Creative Thinking</div>
+                    <div class="skill-item">Problem Solving</div>
+                    <div class="skill-item">Communication</div>
+                    <div class="skill-item">Leadership</div>
+                    <div class="skill-item">Adaptability</div>
+                    <div class="skill-item">Teamwork</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hobbies" class="tab-content">
+            <h2>My Hobbies</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card" onclick="animateCard(this)">
+                    <span class="hobby-icon">📚</span>
+                    <h3>Reading</h3>
+                    <p>Exploring different worlds through books, from fiction to non-fiction, always expanding my knowledge and imagination.</p>
+                </div>
+                
+                <div class="hobby-card" onclick="animateCard(this)">
+                    <span class="hobby-icon">🎨</span>
+                    <h3>Digital Art</h3>
+                    <p>Creating digital artwork and exploring various design techniques to express creativity and bring ideas to life.</p>
+                </div>
+                
+                <div class="hobby-card" onclick="animateCard(this)">
+                    <span class="hobby-icon">🏃‍♂️</span>
+                    <h3>Running</h3>
+                    <p>Staying active and healthy while exploring new routes and challenging myself to reach new personal goals.</p>
+                </div>
+                
+                <div class="hobby-card" onclick="animateCard(this)">
+                    <span class="hobby-icon">🌱</span>
+                    <h3>Gardening</h3>
+                    <p>Growing plants and creating beautiful outdoor spaces while connecting with nature and practicing mindfulness.</p>
+                </div>
+                
+                <div class="hobby-card" onclick="animateCard(this)">
+                    <span class="hobby-icon">📸</span>
+                    <h3>Photography</h3>
+                    <p>Capturing moments and beauty in everyday life, experimenting with different techniques and perspectives.</p>
+                </div>
+                
+                <div class="hobby-card" onclick="animateCard(this)">
+                    <span class="hobby-icon">🍳</span>
+                    <h3>Cooking</h3>
+                    <p>Experimenting with new recipes and cuisines, sharing delicious meals with friends and family.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="instruments" class="tab-content">
+            <h2>Musical Instruments</h2>
+            <div class="instruments-container">
+                <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666;">Music has always been a significant part of my life. Here are the instruments I play:</p>
+                
+                <div class="instruments-grid">
+                    <div class="instrument-card">
+                        <span class="instrument-emoji">🎸</span>
+                        <h3>Guitar</h3>
+                        <p>My primary instrument for over 8 years</p>
+                        <span class="experience-level advanced">Advanced</span>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <span class="instrument-emoji">🎹</span>
+                        <h3>Piano</h3>
+                        <p>Classical training and modern compositions</p>
+                        <span class="experience-level intermediate">Intermediate</span>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <span class="instrument-emoji">🥁</span>
+                        <h3>Drums</h3>
+                        <p>Rhythm and percussion enthusiast</p>
+                        <span class="experience-level intermediate">Intermediate</span>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <span class="instrument-emoji">🎻</span>
+                        <h3>Violin</h3>
+                        <p>Recently started learning this beautiful instrument</p>
+                        <span class="experience-level beginner">Beginner</span>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <span class="instrument-emoji">🎺</span>
+                        <h3>Trumpet</h3>
+                        <p>Played in school band for 4 years</p>
+                        <span class="experience-level intermediate">Intermediate</span>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <span class="instrument-emoji">🪕</span>
+                        <h3>Banjo</h3>
+                        <p>Exploring folk and bluegrass music</p>
+                        <span class="experience-level beginner">Beginner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            // Show the selected tab and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function animateCard(card) {
+            card.style.transform = 'translateY(-15px) scale(0.98)';
+            setTimeout(() => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            }, 150);
+        }
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate skill items on hover
+            const skillItems = document.querySelectorAll('.skill-item');
+            skillItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) rotate(2deg)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotate(0deg)';
+                });
+            });
+
+            // Add click effects to instrument cards
+            const instrumentCards = document.querySelectorAll('.instrument-card');
+            instrumentCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const emoji = this.querySelector('.instrument-emoji');
+                    emoji.style.transform = 'scale(1.2) rotate(360deg)';
+                    setTimeout(() => {
+                        emoji.style.transform = 'scale(1) rotate(0deg)';
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
 </html>
